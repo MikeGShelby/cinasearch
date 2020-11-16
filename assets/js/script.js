@@ -32,9 +32,9 @@ var suggestionsObjectArray = [];
 var j;
 
 var getInfo = function() {
-    
+
     var searchGrab = document.querySelector("#search-input").value;
-    var apiUrl = "http://omdbapi.com/?t=" + searchGrab + "&apikey=344449ee";
+    var apiUrl = "https://omdbapi.com/?t=" + searchGrab + "&apikey=344449ee";
 
     // Fetch from OMDB and store information inside our movie object
     fetch(apiUrl)
@@ -54,11 +54,11 @@ var getInfo = function() {
 }
 
 //API used to gather top results video id and generate an embedded youtube video of movie trailer
-var getTrailer = function(movie) {      
+var getTrailer = function(movie) {
     movie = movie.trim().replaceAll(" ", "%20");
 
     var apiUrl = "https://youtube.googleapis.com/youtube/v3/search?q=" + movie + "%20movie%20trailer&key=AIzaSyAZf7c7gwdAy1KKOaeuRYt6Ag5KYf-Ikfc"
-  
+
     fetch(apiUrl)
     .then(function(response){
         if (response.ok) {
@@ -73,9 +73,9 @@ var getTrailer = function(movie) {
                    'onReady': onPlayerReady,
                    'onStateChange': onPlayerStateChange
                  }
-            });   
             });
-                    
+            });
+
         }
         else {
         alert("Error: " + response.statusText);
@@ -100,7 +100,7 @@ var showInfo = function(data) {
     imgContainer.innerHTML = "<a href =" + data.poster + "id='movie-image-link' target='_blank' class='movie-image-link'></br><img src =" + data.poster + "id='movie-image' class='movie-image'></img>"
     titleContainer.innerHTML = data.title;
     infoContainer.innerHTML = "<p><span class='movie-detail'>Duration:</span><span id='duration'> " + data.runtime + "</span></p><p><span class='movie-detail'>Year:</span><span id='year'> " + data.year + "</span></p>" +
-                        "<p><span class='movie-detail'>Rating:</span><span id='rating'> " + data.rated + "</span></p><p>" + 
+                        "<p><span class='movie-detail'>Rating:</span><span id='rating'> " + data.rated + "</span></p><p>" +
                             "<span class='movie-detail'>Genre:</span><span id='duration'> " + data.genre + "</span></p><p id='synopsis' class='movie-synopsis mt-3'> " + data.plot + "</p>";
 }
 
@@ -113,7 +113,7 @@ var getSuggestions = function() {
 
     var searchGrab = document.querySelector("#search-input").value;
     var apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=b7c4be357f010f43e3a269dfe7a54a8d&query=" + searchGrab;
- 
+
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -127,16 +127,16 @@ var displaySuggestions = function(movieArray, searchGrab) {
     var movieID = "";
     suggestionsObjectArray = [];
     var preventDuplicatesArray = [];
-        
+
     for(i = 0; i < movieArray.length; i++) {
         if (movieArray[i].title === searchGrab) {
             movieID = movieArray[i].id;
             break;
         }
     }
-    
+
     var apiUrl = "https://api.themoviedb.org/3/movie/" + movieID + "/recommendations?api_key=b7c4be357f010f43e3a269dfe7a54a8d&language=en-US";
-    
+
     fetch(apiUrl)
         .then(function(response) {
             response.json().then(function(response) {
@@ -153,7 +153,7 @@ var displaySuggestions = function(movieArray, searchGrab) {
                         title: "",
                         poster: "",
                     };
-                
+
                     suggestionsObject.title = response.results[j].title;
                     suggestionsObject.poster = "https://image.tmdb.org/t/p/w185" + response.results[j].poster_path;
                     suggestionsObjectArray.push(suggestionsObject);
@@ -169,14 +169,14 @@ var eventHandler = function(event){
 }
 trailerStartEl.addEventListener("click", eventHandler);
 
-formEl.addEventListener("submit", () => {  
+formEl.addEventListener("submit", () => {
     event.preventDefault();
-    
+
     var video = document.querySelector("iframe");
-    
+
     if(video!=null){
     video.parentNode.removeChild(video);}
-    
+
     getInfo();
     getSuggestions();
 });
