@@ -14,6 +14,9 @@ Application accepts user input and displays information associated with a movie 
 * OMDb API
 * YouTube API
 
+## Role
+My contribution to this project consisted of writing most of the HTML and CSS for the application. I created the layout and overall appearance using a combination of Bulma and external CSS styles.
+
 ## Website Screenshot
 ![CinaSearch Screenshot](https://github.com/mikegshelby/cinasearch/raw/main/assets/images/cinasearch-screenshot.jpg "Website Screenshot")
 
