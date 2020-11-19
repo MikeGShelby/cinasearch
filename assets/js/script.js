@@ -182,8 +182,6 @@ function getDataStore(response){
     localStorage.setItem('movieObject',JSON.stringify(old_data));
     console.log(movieObject)
 
-
-
     }
 function displayWatchList(response){
 
@@ -196,18 +194,18 @@ function displayWatchList(response){
     var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit"  onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
 
 
-    watchListItem1.innerHTML=htmlhandler
+    watchListItem1.innerHTML=htmlhandler;
 
     watchList.appendChild(watchListItem1);
 
 
-    getDataStore(response)
+    getDataStore(response);
 
 
     localStorage.setItem("movieObject",movieObject.title);
-    console.log(localStorage)
+    console.log(localStorage);
 
-   console.log(movieObject)
+   console.log(movieObject);
 }
 
 function displayMovieSug(data){
