@@ -12,6 +12,9 @@ var infoContainer = document.querySelector("#info-container");
 var trailerStartEl = document.querySelector("#button-container");
 var mainEl = document.querySelector("mainId");
 
+// WATCH LIST VARIABLE (NEEDS DEBUGGING)
+let watchBtn = document.getElementById('watch-btn');
+
 var movieObject = {
     title:"Alien",
     genre: "Horror, Sci-Fi",
@@ -83,6 +86,7 @@ var getTrailer = function(movie) {
 
     }
 )};
+
 //functionality for embeded youtube player
 function onPlayerReady(event) {
     event.target.playVideo();
@@ -162,11 +166,93 @@ var displaySuggestions = function(movieArray, searchGrab) {
             })
         })
 }
+
+
+// WATCH LIST CODE STARTS HERE (NEEDS DEBUGGING)
+function getDataStore(response){
+    var searchGrab=document.querySelector('#search-input').value;
+    if(localStorage.getItem('movieObject')==null){
+
+
+    localStorage.setItem('movieObject',movieObject.title);
+    console.log(localStorage);
+    }
+    let old_data=JSON.parse(localStorage.getItem('movieObject'));
+    old_data.push(searchGrab);
+    localStorage.setItem('movieObject',JSON.stringify(old_data));
+    console.log(movieObject)
+
+
+
+    }
+function displayWatchList(response){
+
+    var watchList=document.querySelector('#watch-list');
+
+    var watchListItem1=document.createElement('li');
+
+        watchListItem1.className="liElement";
+
+    var htmlhandler=`<li class="p-3 my-3"><span id="watch-list-item"><img  src=" ${movieObject.poster} "id='movie-image' ></img><p><strong>Title :</strong> <span id="title">${movieObject.title}</span></br><strong>Run Time :</strong> ${movieObject.runtime}</p><button id="delete-btn" class="delete-btn btn" type="submit"  onclick="deleteWatchLIstItem();">Delete</button> <button id="watch-btn" class="watch-btn btn" type="submit" onclick="displayMovieSug();">Watch</button> </span></li>`
+
+
+    watchListItem1.innerHTML=htmlhandler
+
+    watchList.appendChild(watchListItem1);
+
+
+    getDataStore(response)
+
+
+    localStorage.setItem("movieObject",movieObject.title);
+    console.log(localStorage)
+
+   console.log(movieObject)
+}
+
+function displayMovieSug(data){
+
+   var movieTitle=localStorage.getItem('movieObject');
+        var title=document.getElementById('title');
+        console.log(movieTitle)
+
+        var apiUrl = 'http://omdbapi.com/?t='+movieTitle+'&apikey=4b6a7602';
+
+        // Fetch from OMDB and store information inside our movie object
+        fetch(apiUrl)
+            .then(function(response) {
+                response.json().then(function(response) {
+                    movieObject.runtime = response.Runtime;
+                    movieObject.title = response.Title;
+                    movieObject.genre = response.Genre;
+                    movieObject.plot = response.Plot;
+                    movieObject.poster = response.Poster;
+                    movieObject.year = response.Year;
+                    movieObject.rated = response.Rated;
+
+
+                    showInfo(movieObject);
+                })
+            })
+}
+
+function deleteWatchLIstItem(watchList){
+    var watchListItem1 =document.querySelector('.liElement')
+    var watchList=document.querySelector('#watch-list');
+    const button=document.getElementById('#delete-btn');
+         watchList.removeChild(watchListItem1);
+}
+
+// NEW CODE ENDS HERE
+
+
+
 var eventHandler = function(event){
     if(event.target.id == "watch-trailer-button"){
         getTrailer(movieObject.title);
     }
 }
+
 trailerStartEl.addEventListener("click", eventHandler);
 
 formEl.addEventListener("submit", () => {
