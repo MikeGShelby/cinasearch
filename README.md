@@ -1,7 +1,7 @@
 # CinaSearch
 
 ## Purpose
-A movie search application that retrieves movie-related data from the OMDb and Youtube APIs. My main contribution to this team project was front-end layout and design using Bulma and CSS. 
+A movie search application that retrieves movie-related data from the OMDb and Youtube APIs. 
 
 ## Features
 Application accepts user input and displays information associated with a movie that matches the searched word, if one exists. The application also allows the user to view a trailer for the featured movie. Lastly, the user can add the movie to their watch list, which will save to local storage and remain on the page for the user to view again if they wish.
